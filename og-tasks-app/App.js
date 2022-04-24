@@ -1,7 +1,7 @@
 import AllTasksPage from './pages/AllTasks';
 import TaskDetails from './pages/TaskDetails';
 import { NativeRouter, Switch, Route, BackButton } from 'react-router-native';
-import { Button, StyleSheet, StatusBar, Text, View, BackHandler } from 'react-native';
+import { StyleSheet, StatusBar, Text, View, ToastAndroid } from 'react-native';
 
 export default function App() {
   return (
@@ -14,9 +14,9 @@ export default function App() {
           <Route exact path='/' component={AllTasksPage} />
           <Route exact path='/taskDetails' component={TaskDetails} />
         </Switch>
-      </View>
+        </View>
       </BackButton>
-    </NativeRouter>
+      </NativeRouter>
   )
 }
 
