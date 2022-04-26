@@ -24,7 +24,11 @@ export default function AllTasksPage() {
           id: key,
           ...data[key]
         };
-        tasks.push(task);
+        if (task.urgent) {
+          tasks.unshift(task);
+        } else {
+          tasks.push(task);
+        }
       } 
 
       setTasks(tasks);
@@ -32,12 +36,14 @@ export default function AllTasksPage() {
   }, []);
   
   function navigateToForm() {
-    console.log("Form clicked");
     history.push("/taskDetails");
   }
 
   function doneHandler(taskId) {
-    console.log("ID", taskId);
+    const foundDoneTask = tasks.find(el => el.id === taskId);
+    const filteredTasks = tasks.filter(el => el.id !== taskId)
+    filteredTasks.push(foundDoneTask);
+    setTasks(filteredTasks);
   }
 
   function deleteHandler(taskId) {
@@ -55,7 +61,7 @@ export default function AllTasksPage() {
 
   return (
     <View style={styles.container}>
-      <TaskList onDeleteParentTask={deleteHandler} tasks={tasks} />
+      <TaskList onDoneParentTask={doneHandler} onDeleteParentTask={deleteHandler} tasks={tasks} />
       <Button onPress={navigateToForm} title='Add Task'></Button>
     </View>
   );

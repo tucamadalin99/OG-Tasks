@@ -1,10 +1,17 @@
 import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { ToastAndroid } from 'react-native';
 import { useHistory } from 'react-router-native';
+import { useState, useEffect } from 'react';
 
 export default function Task(props) {
     const history = useHistory();
-    const apiUrl = "https://tmw-app-12422-default-rtdb.europe-west1.firebasedatabase.app/tasks"
+    const apiUrl = "https://tmw-app-12422-default-rtdb.europe-west1.firebasedatabase.app/tasks";
+    const [isDone, setIsDone] = useState(false);
+    const [isUrgent, setIsUrgent] = useState(false);
+
+    useEffect(() => {
+        setIsUrgent(props.urgent);
+     }, []);
 
     function navigateToDetails() {
         history.push({
@@ -14,16 +21,15 @@ export default function Task(props) {
     }
 
     function handleDone() {
-        console.log("pressed done", props.id);
-        
+        props.onDoneTask(props.id);
+        setIsDone(!isDone);
     }
 
     function handleDelete() {
-        console.log("pressed delete");
         props.onDeleteTask(props.id);
     }
 
-    return <View style={styles.taskWrapper}>
+    return <View style={[styles.taskWrapper, {backgroundColor: isDone ? "#a2ff9c" : "#dfe1f0"}, {borderLeftWidth: isUrgent ? 2 : 0}, {borderLeftColor: isUrgent ? "red" : "none"}]}>
         <View style={styles.contentContainer} onTouchEnd={navigateToDetails}>
             <Text>{props.text}</Text>
             <Text style={styles.dueContainer}>{props.date}</Text>
@@ -48,7 +54,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        backgroundColor: "#dfe1f0"
     },
     actionsWrapper: {
         display: "flex",

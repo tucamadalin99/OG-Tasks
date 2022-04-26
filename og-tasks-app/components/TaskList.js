@@ -5,6 +5,10 @@ export default function TaskList(props) {
         props.onDeleteParentTask(taskId);
     }
 
+    function onDoneChildTask(taskId) {
+        props.onDoneParentTask(taskId);
+    }
+
     return (
         <ScrollView style={styles.taskListContainer}>
             {props.tasks.map((task => <Task
@@ -14,6 +18,7 @@ export default function TaskList(props) {
                 date={task.date}
                 urgent={task.urgent}
                 onDeleteTask={onDeleteChildTask}
+                onDoneTask={onDoneChildTask}
             />))}
         </ScrollView>
     );
