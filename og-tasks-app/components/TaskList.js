@@ -17,6 +17,7 @@ export default function TaskList(props) {
                 text={task.text}
                 date={task.date}
                 urgent={task.urgent}
+                done={task.done}
                 onDeleteTask={onDeleteChildTask}
                 onDoneTask={onDoneChildTask}
             />))}

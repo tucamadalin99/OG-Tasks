@@ -41,9 +41,21 @@ export default function AllTasksPage() {
 
   function doneHandler(taskId) {
     const foundDoneTask = tasks.find(el => el.id === taskId);
-    const filteredTasks = tasks.filter(el => el.id !== taskId)
-    filteredTasks.push(foundDoneTask);
-    setTasks(filteredTasks);
+    foundDoneTask.done = !foundDoneTask.done;
+    fetch(
+      `${apiUrl}/${taskId}.json`,
+      {
+        method: "PUT",
+        body: JSON.stringify(foundDoneTask),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    ).then(() => {
+      const filteredTasks = tasks.filter(el => el.id !== taskId)
+      filteredTasks.push(foundDoneTask);
+      setTasks(filteredTasks);
+    })
   }
 
   function deleteHandler(taskId) {

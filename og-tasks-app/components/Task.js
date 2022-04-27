@@ -11,6 +11,7 @@ export default function Task(props) {
 
     useEffect(() => {
         setIsUrgent(props.urgent);
+        setIsDone(props.done);
      }, []);
 
     function navigateToDetails() {

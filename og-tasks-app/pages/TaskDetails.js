@@ -11,6 +11,7 @@ export default function TaskDetailsPage() {
     const [taskText, setTaskText] = useState("");
     const [taskDate, setTaskDate] = useState("");
     const [taskUrgent, setTaskUrgent] = useState(false);
+    const [taskDone, setTaskDone] = useState(false);
     let isEditing = false;
 
     const toggleUrgentSwitch = () => setTaskUrgent(previousState => !previousState);
@@ -26,7 +27,8 @@ export default function TaskDetailsPage() {
             const newTask = {
                 text: taskText,
                 date: taskDate,
-                urgent: taskUrgent
+                urgent: taskUrgent,
+                done: taskDone
             }
 
             if (location.state) {
@@ -63,11 +65,14 @@ export default function TaskDetailsPage() {
             setTaskText(location.state.text);
             setTaskDate(location.state.date);
             setTaskUrgent(location.state.urgent);
+            setTaskDone(location.state.done);
         }
      }, []);
         return (
             <View style={styles.formContainer}>
+                <Text>Task name</Text>
                 <TextInput onChangeText={(text) => setTaskText(text)} style={styles.inputField} value={taskText}></TextInput>
+                <Text>Due date</Text>
                 <TextInput onChangeText={(text) => setTaskDate(text)} style={styles.inputField} value={taskDate}></TextInput>
                 <Text>Urgent</Text>
                 <Switch
